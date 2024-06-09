@@ -1,4 +1,4 @@
-# https://github.com/NyctophileSkyzo/CryptoScriptProtect?tab=readme-ov-file#license
+#https://github.com/NyctophileSkyzo/CryptoScriptProtect?tab=readme-ov-file#license
 import random
 import base64
 import zlib
