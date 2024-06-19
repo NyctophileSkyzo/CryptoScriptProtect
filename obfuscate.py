@@ -11,13 +11,11 @@ import marshal
 # Meningkatkan batas rekursi
 sys.setrecursionlimit(1000000000)
 
-
 # Fungsi untuk membersihkan layar
 def clear():
     os = __import__("os")
     platform = __import__("sys").platform
     os.system("clear" if "linux" in platform.lower() else "cls")
-
 
 # Fungsi enkripsi AES sederhana
 def aes_encrypt(data, key):
@@ -26,7 +24,6 @@ def aes_encrypt(data, key):
     cipher = AES.new(key, AES.MODE_CBC, iv)
     encrypted = cipher.encrypt(pad(data.encode("utf-8"), AES.block_size))
     return base64.b64encode(iv + encrypted).decode("utf-8")
-
 
 # Fungsi dekripsi AES sederhana
 def aes_decrypt(encrypted, key):
@@ -37,7 +34,6 @@ def aes_decrypt(encrypted, key):
     decrypted = unpad(cipher.decrypt(encrypted[16:]), AES.block_size)
     return decrypted.decode("utf-8")
 
-
 # Membersihkan layar sebelum memulai
 clear()
 
@@ -45,7 +41,6 @@ clear()
 input_file = input("[-] Input file : ")
 with open(input_file, "r", encoding="utf-8") as file:
     original_script = file.read()
-
 
 # Fungsi untuk melakukan obfuscation berulang
 def obfuscate_script(script, iterations):
@@ -97,18 +92,25 @@ exec(zlib.decompress(base64.b64decode("{encoded_code}")).decode())
         )
 
         # Final obfuscated script
-        script = f"""
+        obfuscated = f"""
 import marshal
 exec(marshal.loads({repr(compiled_code)}))
 """
+        
+        # Kompilasi menggunakan marshal lagi
+        compiled_ = marshal.dumps(compile(obfuscated, '<string>', 'exec'))
+        script = f"""
+import marshal
+exec(marshal.loads({repr(compiled_)}))
+"""
     return script
 
-
 # Meminta input jumlah lapisan obfuscation
-loop = int(input("Berapa Lapis: "))
+loop = int(input("[-] Count : "))
 if loop > 350:
     print("Batasnya hanya 350")
     sys.exit()
+
 # Obfuscate script
 final_script = obfuscate_script(original_script, loop)
 
