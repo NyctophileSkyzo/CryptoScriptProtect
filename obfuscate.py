@@ -84,8 +84,7 @@ exec(aes_decrypt(encrypted_script, key))
                 f"""
 import base64
 import zlib
-exec(zlib.decompress(base64.b64decode("{encoded_code}")).decode())
-""",
+exec(zlib.decompress(base64.b64decode("{encoded_code}")).decode())""",
                 "<string>",
                 "exec",
             )
@@ -94,15 +93,13 @@ exec(zlib.decompress(base64.b64decode("{encoded_code}")).decode())
         # Final obfuscated script
         obfuscated = f"""
 import marshal
-exec(marshal.loads({repr(compiled_code)}))
-"""
+exec(marshal.loads({repr(compiled_code)}))"""
         
         # Kompilasi menggunakan marshal lagi
         compiled_ = marshal.dumps(compile(obfuscated, '<string>', 'exec'))
         script = f"""
 import marshal
-exec(marshal.loads({repr(compiled_)}))
-"""
+exec(marshal.loads({repr(compiled_)}))"""
     return script
 
 # Meminta input jumlah lapisan obfuscation
